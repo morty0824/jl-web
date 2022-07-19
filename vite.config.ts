@@ -52,12 +52,19 @@ export default defineConfig({
         'vue/macros',
         '@vueuse/head',
         '@vueuse/core',
-        { 'lodash-es': ['cloneDeep', 'camelCase', 'isPlainObject', 'merge', 'get'] },
+        'pinia',
+        { 'lodash-es': ['find', 'merge', 'get'] },
+        {
+          axios: [[
+            'default', 'axios',
+          ]],
+        },
       ],
       dts: 'src/auto-imports.d.ts',
       dirs: [
         'src/composables',
         'src/store',
+        // 'src/api',
       ],
       vueTemplate: true,
       resolvers: [ElementPlusResolver()],
@@ -131,19 +138,13 @@ export default defineConfig({
       include: [path.resolve(__dirname, 'locales/**')],
     }),
 
-    // https://github.com/antfu/vite-plugin-inspect
+    // https://github.com/btd/rollup-plugin-visualizer
     visualizer({ open: true, gzipSize: true, openOptions: { background: true } }),
+
+    // https://github.com/antfu/vite-plugin-inspect
     // Visit http://localhost:3333/__inspect/ to see the inspector
     Inspect(),
   ],
-  // https://github.com/vitest-dev/vitest
-  test: {
-    include: ['test/**/*.test.ts'],
-    environment: 'jsdom',
-    deps: {
-      inline: ['@vue', '@vueuse', 'vue-demi'],
-    },
-  },
 
   // https://github.com/antfu/vite-ssg
   ssgOptions: {
