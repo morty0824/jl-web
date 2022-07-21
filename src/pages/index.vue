@@ -6,11 +6,18 @@ const a = {
   a: 1,
   b: 2,
 }
-console.log(get({ a: 'morty' }, 'a'))
 const go = () => {
   if (name)
     router.push(`/hi/${encodeURIComponent(name)}`)
 }
+useRequest(getWikiList, {
+  onSuccess: (res) => {
+    console.log('🚀 ~ file: index.vue ~ line 18 ~ res', res)
+  },
+  onError: (err) => {
+    console.log(err)
+  },
+})
 const val = ref('')
 const { t } = useI18n()
 </script>

@@ -9,7 +9,6 @@ import AutoImport from 'unplugin-auto-import/vite'
 import Markdown from 'vite-plugin-vue-markdown'
 import { VitePWA } from 'vite-plugin-pwa'
 import VueI18n from '@intlify/vite-plugin-vue-i18n'
-import Inspect from 'vite-plugin-inspect'
 import Prism from 'markdown-it-prism'
 import LinkAttributes from 'markdown-it-link-attributes'
 import Unocss from 'unocss/vite'
@@ -58,13 +57,15 @@ export default defineConfig({
           axios: [[
             'default', 'axios',
           ]],
+        }, {
+          'vue-request': ['useRequest'],
         },
       ],
       dts: 'src/auto-imports.d.ts',
       dirs: [
         'src/composables',
         'src/store',
-        // 'src/api',
+        'src/api',
       ],
       vueTemplate: true,
       resolvers: [ElementPlusResolver()],
@@ -140,10 +141,6 @@ export default defineConfig({
 
     // https://github.com/btd/rollup-plugin-visualizer
     visualizer({ open: true, gzipSize: true, openOptions: { background: true } }),
-
-    // https://github.com/antfu/vite-plugin-inspect
-    // Visit http://localhost:3333/__inspect/ to see the inspector
-    Inspect(),
   ],
 
   // https://github.com/antfu/vite-ssg
@@ -164,7 +161,11 @@ export default defineConfig({
     proxy: {
       '/api': {
         changeOrigin: true,
-        target: 'http://zmjs.ml:8669',
+        target: 'http://monitor.p3nu.com',
+        // rewrite(path) {
+        //   console.log('🚀 ~ file: vite.config.ts ~ line 169 ~ rewrite ~ path', path)
+        //   return path.replace(/^\/api/, '')
+        // },
         ws: true,
       },
     },
